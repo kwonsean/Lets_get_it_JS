@@ -45,6 +45,14 @@ $form.addEventListener('submit', (event) =>{
   // 정답이랑 같으면 홈런 출력 후 종료
   if(answer.join('') === value){
     $logs.textContent = `${value} -> 홈런!`
+    setTimeout(() =>{
+      const retry = confirm('한번 더?')
+      if(retry){
+        window.location.reload()
+      }else{
+      return
+      }
+    },1000)
     return
   }
 
