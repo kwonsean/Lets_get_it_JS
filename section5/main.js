@@ -14,6 +14,7 @@ for(let n = 0; n < 4; n++){
   numbers.splice(index, 1)
 }
 console.log(answer)
+alert('숫자가 정해졌습니다!')
 
 const tries = []
 function checkInput(input){
@@ -51,6 +52,14 @@ $form.addEventListener('submit', (event) =>{
   if(tries.length >= 9){
     const message = document.createTextNode(`실패! 정답은 ${answer.join('')} 입니다.`)
     $logs.appendChild(message);
+    setTimeout(() =>{
+      const retry = confirm('한번 더?')
+      if(retry){
+        window.location.reload()
+      }else{
+      return
+      }
+    },1000)
     return
   }
 
@@ -86,11 +95,18 @@ $form.addEventListener('submit', (event) =>{
     if(out > 2){
       const message = document.createTextNode(`3 아웃! 정답은 ${answer.join('')} 입니다.`)
       $logs.appendChild(message);
+      setTimeout(() =>{
+        const retry = confirm('한번 더?')
+        if(retry){
+          window.location.reload()
+        }else{
+        return
+        }
+      },1000)
       return
     } 
     $logs.append(`${value}: ${out} 아웃 입니다.`, document.createElement('br'))
     tries.push(value)
-    
   }
   console.log(tries)
 })
