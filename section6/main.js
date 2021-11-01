@@ -19,6 +19,17 @@ function drawBall(number, $parent){
     const $ball = document.createElement('div')
     $ball.className = 'ball'
     $ball.textContent = number
+    if(number < 10){
+      $ball.classList.add('red')
+    } else if(number < 20){
+      $ball.classList.add('orange')
+    } else if(number < 30){
+      $ball.classList.add('yellow')
+    } else if(number < 40){
+      $ball.classList.add('blue')
+    } else{
+      $ball.classList.add('green')
+    }
     $parent.appendChild($ball)
 }
 for(let i =0; i<winBalls.length; i++){
