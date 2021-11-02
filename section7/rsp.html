@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>가위 바위 보</title>
+  <style>
+    #computer{
+      width: 142px;
+      height: 200px;
+    }
+  </style>
+  <script defer src="main.js"></script>
+</head>
+<body>
+  <div id="computer"></div>
+  <div>
+    <button id="scissors" class="btn">가위</button>
+    <button id="rock" class="btn">바위</button>
+    <button id="paper" class="btn">보</button>
+  </div>
+  <div id="result"></div>
+  <span id="myScore">0</span>
+  <span id="computerScore">0</span>
+  <br>
+  <button class="test">TEST</button>
+</body>
+<script>
+  const $test = document.querySelector('.test')
+  const miniQuiz = (x) => () => {
+    console.log('고차함수 입니다.', x)
+  }
+  const mq = miniQuiz('~!')
+  $test.addEventListener('click', mq)
+  $test.removeEventListener('click', mq)
+
+</script>
+</html>
