@@ -63,9 +63,12 @@ class Game {
      this.updateMonsterStat();
      this.showMessage(`몬스터와 마주쳤다. ${this.monster.name}인 것 같다!`)
    } else if (input === '2'){
-
+     this.showMessage(`휴식을 취합니다! ${this.hero.maxHp - this.hero.hp}HP를 회복하여 최대 HP가 되었습니다!` )
+     this.hero.hp = this.hero.maxHp
+     this.updateHeroStat()
    } else if (input === '3'){
-
+    const end = confirm('게임을 종료할까요? save는 없답니다')
+    end? location.reload() : ''
    }
  }
  onBattleMenuInput = (event) => {
@@ -89,9 +92,16 @@ class Game {
     this.updateHeroStat()
     this.updateMonsterStat()
   } else if (input === '2'){
-
+    this.showMessage('HP 20을 회복합니다.')
+    this.hero.heal(this.monster)
+    this.updateHeroStat()
   } else if (input === '3'){
-    
+    alert('성공적으로 도망쳤다!')
+    this.updateHeroStat()
+    this.monster = null
+    this.changeScreen('game')
+    this.showMessage('')
+    this.updateMonsterStat()
   }
   }
   updateHeroStat() {
@@ -160,8 +170,13 @@ class Hero extends Unit {
     super.attack(target)
   }
   heal(monster) {
-    this.hp += 20;
-    this.hp -= monster.att
+    if(this.hp + 20 >= this.maxHp){
+      this.hp = this.maxHp
+      this.hp -= monster.att
+    } else{
+      this.hp += 20;
+      this.hp -= monster.att
+    }
   }
   getXp(xp) {
     this.xp += xp
