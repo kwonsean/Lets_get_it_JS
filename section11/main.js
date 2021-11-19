@@ -1,12 +1,13 @@
 const $wrapper = document.querySelector('#wrapper')
 
-const total = 12
-const color = ['red', 'orange', 'yellow', 'green', 'purple', 'pink']
-let colorCopy = [...color, ...color]
+let total = 0
+const color = ['red', 'orange', 'yellow', 'green', 'purple', 'pink', 'royalblue', 'aquamarine', 'slategray', 'salmon']
+let colorCopy = []
 let shuffled = []
 let clicked = []
 let completed = []
 let clickable = false
+let startTime = 0
 
 function shuffle() {
   for(let i = 0; colorCopy.length > 0; i +=1){
@@ -50,7 +51,9 @@ function onClickcard(){
       return
     }
     setTimeout(() => {
-      alert('축하합니다!')
+      let endTime = new Date()
+      let record = ((endTime - startTime) / 1000).toFixed(2)
+      alert(`축하합니다! ${record}초 안에 클리어했습니다.`)
       resetGame()
     }, 1000)
     return
@@ -67,6 +70,16 @@ function onClickcard(){
 
 function startGame() {
   console.trace()
+  let inputNum = Number(prompt('12~20 사이의 짝수를 입력해 주세요.'))
+  if(inputNum === 0) return
+  if(inputNum < 12 || inputNum > 20 || inputNum % 2 !==0){
+    alert('잘못된 입력입니다.')
+    resetGame()
+  }
+  total = inputNum
+  let slicedColors = color.slice(0, total/2)
+  colorCopy = [...slicedColors, ...slicedColors]
+  startTime = new Date()
   shuffle()
   for (let i = 0; i < total; i +=1){
     const card = createCard(i)
@@ -91,9 +104,11 @@ startGame()
 
 function resetGame() {
   $wrapper.innerHTML = '';
-  colorCopy = [...color, ...color]
+  total = 0
+  colorCopy = []
   shuffled = []
   completed = []
+  clicked = []
   clickable= false
   startGame()
 }
