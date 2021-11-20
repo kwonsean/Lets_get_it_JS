@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>텍스트 RPG 게임</title>
+  <!-- <script defer src="./main.js"></script> -->
+  <script defer src="./mainClassVer.js"></script>
+</head>
+<body>
+  <form id="start-screen">
+    <input type="text" placeholder="주인공 이름을 입력하세요!" id="name-input">
+    <button id="start">시작</button>
+  </form>
+  <div id="screen">
+    <div id="hero-stat">
+      <span id="hero-name"></span>
+      <span id="hero-level"></span>
+      <span id="hero-hp"></span>
+      <span id="hero-xp"></span>
+      <span id="hero-att"></span>
+    </div>
+    <form style="display: none;" id="game-menu">
+      <div id="menu-1">1. 모험</div>
+      <div div id="menu-2">2. 휴식</div>
+      <div id="menu-3">3. 종료</div>
+      <input id="menu-input">
+      <button id="menu-button">입력</button>
+    </form>
+    <form style="display: none;" id="battle-menu">
+      <div id="battle-1">1. 공격</div>
+      <div id="battle-2">2. 회복</div>
+      <div id="battle-3">3. 도망</div>
+      <input id="battle-input">
+      <button id="battle-button">입력</button>
+    </form>
+    <div id="message"></div>
+    <div id="monster-stat">
+      <span id="monster-name"></span>
+      <span id="monster-hp"></span>
+      <span id="monster-att"></span>
+    </div>
+  </div>
+</body>
+<script>
+  const menu = document.querySelector('#menu-1')
+  menu.addEventListener('click', () => console.log('hi'))
+  class Human {
+    constructor(name, age){
+      this.name = name
+      this.age = age
+    }
+    printName(){
+      console.log(this.name)
+    }
+    printAge() {
+      console.log(this.age)
+    }
+  }
+  const i = new Human('ksh', 26)
+  console.log(i)
+  i.printAge()
+  i.printName()
+
+  class Developer extends Human{
+    constructor(name, age, html, css, js){
+    super(name, age)
+    html ? this.html = 'I use HTML!' : this.html = 'I can\'t use HTML..'
+    css ? this.css = 'I use CSS!' : this.css = 'I can\'t use CSS..'
+    js ? this.js = 'I use JS!' : this.js = 'I can\'t use JS..'
+  }
+   yesIcan() {
+    console.log(`
+    ${this.html}
+    ${this.css}
+    ${this.js}
+    `)
+   }
+  }
+
+  const dI = new Developer('ksh', 26, true, true, true)
+  console.log(dI)
+  dI.yesIcan()
+</script>
+</html>
