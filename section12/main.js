@@ -25,6 +25,9 @@ function onSubmit(event) {
   row = parseInt(event.target.row.value)
   cell = parseInt(event.target.cell.value)
   mine = parseInt(event.target.mine.value)
+  normalCellFound = false
+  searched = null
+  firstClick = true
   if(row * cell < mine){
     alert('지뢰의 수가 너무 많습니다.')
     row = 0
@@ -80,7 +83,6 @@ function drawTable() {
       }
       $tr.append($td)
     })
-    console.log($tbody)
     $tbody.append($tr)
     $tbody.addEventListener('contextmenu', onRightClick)
     $tbody.addEventListener('click', onLeftClick)
@@ -138,17 +140,29 @@ function onLeftClick(event) {
   const target = event.target
   const rowIndex = target.parentNode.rowIndex
   const cellIndex = target.cellIndex
-  const cellData = data[rowIndex][cellIndex]
+  let cellData = data[rowIndex][cellIndex]
+  if(firstClick){
+    firstClick = false;
+    searched = Array(row).fill().map(() => [])
+    if(cellData === CODE.MINE){
+      transferMine(rowIndex, cellIndex)
+      data[rowIndex][cellIndex] = CODE.NORMAL
+      cellData = CODE.NORMAL
+    }
+  }
   if(cellData === CODE.NORMAL){
     openAround(rowIndex, cellIndex)
   } else if (cellData === CODE.MINE){
-    target.textContent = '펑'
-    target.className = 'opened'
-    clearInterval(interval)
-    $tbody.removeEventListener('contextmenu', onRightClick)
-    $tbody.removeEventListener('click', onLeftClick)
-    const retry = confirm('실패했습니다. 재도전 하시겠습니까?')
-    if (retry) location.reload()
+    showMines()
+    setTimeout(() => {
+      target.textContent = '펑'
+      target.className = 'opened'
+      clearInterval(interval)
+      $tbody.removeEventListener('contextmenu', onRightClick)
+      $tbody.removeEventListener('click', onLeftClick)
+      const retry = confirm('실패했습니다. 재도전 하시겠습니까?')
+      if (retry) location.reload()
+    },0)
   }
 }
 
@@ -190,4 +204,38 @@ function openAround(rI, cI) {
       openAround(rI + 1, cI + 1)
     }
   }, 0);
+}
+
+let normalCellFound = false
+let searched
+let firstClick = true
+function transferMine(rI, cI) {
+  if (normalCellFound) return
+  if (rI < 0 || rI >= row || cI < 0 || cI >= cell) return
+  if (searched[rI][cI]) return
+  if (data[rI][cI] === CODE.NORMAL){
+    normalCellFound = true
+    data[rI][cI] = CODE.MINE
+  } else {
+    searched[rI][cI] = true
+    transferMine(rI - 1, cI - 1)
+    transferMine(rI - 1, cI)
+    transferMine(rI - 1, cI + 1)
+    transferMine(rI, cI - 1)
+    transferMine(rI, cI + 1)
+    transferMine(rI + 1, cI - 1)
+    transferMine(rI + 1, cI)
+    transferMine(rI + 1, cI + 1)
+  }
+}
+
+function showMines() {
+  const mines = [CODE.MINE, CODE.QUESTION_MINE, CODE.FLAG_MINE]
+  data.forEach((row, rowIndex) => {
+    row.forEach((cell, cellIndex) => {
+      if(mines.includes(cell)) {
+        $tbody.children[rowIndex].children[cellIndex].textContent = '펑'
+      }
+    })
+  })
 }
