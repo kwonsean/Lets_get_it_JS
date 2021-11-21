@@ -4,12 +4,12 @@ let data = []
 
 // $table -> $fragment -> $tr -> $td
 function startGame() {
-  const $fragment = document.createDocumentFragment()
-    [(1, 2, 3, 4)].forEach(function () {
+  const $fragment = document.createDocumentFragment();
+    [1, 2, 3, 4].forEach(function () {
       const rowData = []
       data.push(rowData)
-      const $tr = document.createElement('tr')
-      [(1, 2, 3, 4)].forEach(() => {
+      const $tr = document.createElement('tr');
+      [1, 2, 3, 4].forEach(() => {
         rowData.push(0)
         const $td = document.createElement('td')
         $tr.appendChild($td)
@@ -22,6 +22,7 @@ function startGame() {
 }
 
 function put2ToRandomCell() {
+  // 값을 2개씩 가지는(행, 열) 2차원 배열이 채워짐
   const emptyCells = [] // [[i1, j1], [i2, j2], [i3, j3]]
   data.forEach(function (rowData, i) {
     rowData.forEach(function (cellData, j) {
@@ -30,12 +31,16 @@ function put2ToRandomCell() {
       }
     })
   })
+  console.log('empty',emptyCells)
   // randomCell === [i, j]
+  // 랜덤으로 하나 골라서
   const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
+  // 행, 열 값을 data에 넣고 그곳에 2를 넣어줌 
   data[randomCell[0]][randomCell[1]] = 2
 }
 
 function draw() {
+  // 모든 데이터(표에 모든 칸)을 돌면서 값이 있으면 그 값을 넣어줌
   data.forEach((rowData, i) => {
     rowData.forEach((cellData, j) => {
       const $target = $table.children[i].children[j]
@@ -80,7 +85,8 @@ function moveCells(direction) {
           }
         })
       })
-      console.log(newData)[(1, 2, 3, 4)].forEach((rowData, i) => {
+      console.log('newData',newData)
+      ;[1, 2, 3, 4].forEach((rowData, i) => {
         ;[1, 2, 3, 4].forEach((cellData, j) => {
           data[i][j] = Math.abs(newData[i][j]) || 0
         })
@@ -104,7 +110,8 @@ function moveCells(direction) {
           }
         })
       })
-      console.log(newData)[(1, 2, 3, 4)].forEach((rowData, i) => {
+      console.log(newData)
+      ;[1, 2, 3, 4].forEach((rowData, i) => {
         ;[1, 2, 3, 4].forEach((cellData, j) => {
           data[i][3 - j] = Math.abs(newData[i][j]) || 0
         })
@@ -128,7 +135,8 @@ function moveCells(direction) {
           }
         })
       })
-      console.log(newData)[(1, 2, 3, 4)].forEach((cellData, i) => {
+      console.log(newData)
+      ;[1, 2, 3, 4].forEach((cellData, i) => {
         ;[1, 2, 3, 4].forEach((rowData, j) => {
           data[j][i] = Math.abs(newData[i][j]) || 0
         })
