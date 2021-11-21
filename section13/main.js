@@ -1,5 +1,6 @@
 const $table = document.getElementById('table')
 const $score = document.getElementById('score')
+const $backBtn = document.getElementById('back')
 let data = []
 
 // $table -> $fragment -> $tr -> $td
@@ -65,6 +66,14 @@ startGame()
 // ];
 // draw();
 function moveCells(direction) {
+  const prevData = [[],[],[],[]]
+  const prevScore = parseInt($score.textContent)
+  data.forEach((row,i) => {
+    row.forEach((item,j) => {
+      prevData[i].push(data[i][j])
+    })
+  })
+  console.log('prevData',prevData)
   switch (direction) {
     case 'left': {
       const newData = [[], [], [], []]
@@ -76,6 +85,9 @@ function moveCells(direction) {
             const prevData = currentRow[currentRow.length - 1]
             if (prevData === cellData) {
               // 이전 값과 지금 값이 같으면
+              // 연속으로 합쳐지는것을 방지하기 위해 음수를 곱한다.
+              // 2 2 4 8 -> 16방지, 2 2 4 8 -> -4 4 8
+              // 이후 data에는 절대값으로 넣어주어 음수 제거 
               const score = parseInt($score.textContent)
               $score.textContent = score + currentRow[currentRow.length - 1] * 2
               currentRow[currentRow.length - 1] *= -2
@@ -90,6 +102,12 @@ function moveCells(direction) {
         ;[1, 2, 3, 4].forEach((cellData, j) => {
           data[i][j] = Math.abs(newData[i][j]) || 0
         })
+      })
+      console.log('nowData',data)
+      $backBtn.addEventListener('click', () => {
+        data = prevData
+        $score.textContent = prevScore
+        draw()
       })
       break
     }
@@ -116,6 +134,11 @@ function moveCells(direction) {
           data[i][3 - j] = Math.abs(newData[i][j]) || 0
         })
       })
+      $backBtn.addEventListener('click', () => {
+        data = prevData
+        $score.textContent = prevScore
+        draw()
+      })
       break
     }
     case 'up': {
@@ -140,6 +163,11 @@ function moveCells(direction) {
         ;[1, 2, 3, 4].forEach((rowData, j) => {
           data[j][i] = Math.abs(newData[i][j]) || 0
         })
+      })
+      $backBtn.addEventListener('click', () => {
+        data = prevData
+        $score.textContent = prevScore
+        draw()
       })
       break
     }
@@ -166,9 +194,16 @@ function moveCells(direction) {
           data[3 - j][i] = Math.abs(newData[i][j]) || 0
         })
       })
+      $backBtn.addEventListener('click', () => {
+        data = prevData
+        $score.textContent = prevScore
+        draw()
+      })
       break
     }
   }
+  // 승 패 처리
+  // 1차원 배열로 만들어서 2048값이 있으면 승리처리
   if (data.flat().includes(2048)) {
     // 승리
     draw()
@@ -176,7 +211,7 @@ function moveCells(direction) {
       alert('축하합니다. 2048을 만들었습니다!')
     }, 0)
   } else if (!data.flat().includes(0)) {
-    // 빈 칸이 없으면 패배
+    // 빈 칸이 없으면 패배 (0이 없다는 것은 빈칸이 없다는 것이기 때문에)
     alert(`패배했습니다... ${$score.textContent}점`)
   } else {
     put2ToRandomCell()
