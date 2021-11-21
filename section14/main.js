@@ -9,12 +9,13 @@ const holes = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 let started = false
 let score = 0
 let time = 60
-
+let timerId
+let tickId
 $start.addEventListener('click', () => {
   if (started) return
   started = true
   console.log('시작')
-  const timerId = setInterval(() => {
+  timerId = setInterval(() => {
     time = (time * 10 - 1) / 10
     $timer.textContent = time
     if (time === 0) {
@@ -25,7 +26,7 @@ $start.addEventListener('click', () => {
       }, 50)
     }
   }, 100)
-  const tickId = setInterval(tick, 1000)
+  tickId = setInterval(tick, 1000)
   tick()
 })
 
@@ -81,7 +82,8 @@ $$cells.forEach(($cell, index) => {
         if (retry) {
           location.reload()
         } else {
-          return
+          clearInterval(timerId)
+          clearInterval(tickId)
         }
       }, 50)
     }
