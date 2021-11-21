@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    #bonus, #result{
+      line-height: 50px;
+    }
+    .ball{
+      display: inline-block;
+      border: 1px solid rgb(70, 70, 70);
+      border-radius: 20px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 20px;
+      text-align: center;
+      margin-right: 20px;
+    }
+    .ball.red{
+      background-color: red;
+      color: white;
+    }
+    .ball.orange{
+      background-color: orange;
+    }
+    .ball.yellow{
+      background-color: yellow;
+    }
+    .ball.blue{
+      background-color: blue;
+      color: white;
+    }
+    .ball.green{
+      background-color: green;
+      color: white;
+    }
+  </style>
+  <script defer src="./main.js"></script>
+  <title>로또 추첨기</title>
+</head>
+<body>
+  <div id="result">추첨 결과는? </div>
+  <div id="bonus">보너스 </div>
+</body>
+</html>

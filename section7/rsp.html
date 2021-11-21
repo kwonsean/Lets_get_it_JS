@@ -26,22 +26,29 @@
 </body>
 <script>
   const $test = document.querySelector('.test')
-  const miniQuiz = (x) => () => {
-    console.log('고차함수 입니다.', x)
-  }
-  console.log(miniQuiz('~!') === miniQuiz('~!'))
-  console.log(miniQuiz('~!'))
-  const mq = miniQuiz('~!')
-  console.log(mq === mq)
-  $test.addEventListener('click', mq)
-  $test.removeEventListener('click', mq)
 
-  const normal = (x) =>{
-    console.log('일반함수 입니다.', x)
-  }
-  console.log(normal('~!') === normal('~!'))
-  $test.addEventListener('click', normal)
-  $test.removeEventListener('click', normal)
+// 일반함수
+const normal = (x) =>{
+  console.log('일반함수 입니다.', x)
+}
+
+console.log(normal('~!') === normal('~!'))
+
+$test.addEventListener('click', normal)
+$test.removeEventListener('click', normal)
+
+// 고차함수
+const miniQuiz = (x) => () => {
+  console.log('고차함수 입니다.', x)
+}
+
+console.log(miniQuiz('~!') === miniQuiz('~!'))
+console.log(miniQuiz('~!'))
+const mq = miniQuiz('~!')
+console.log(mq === mq)
+
+$test.addEventListener('click', mq)
+$test.removeEventListener('click', mq)
 
 </script>
 </html>
