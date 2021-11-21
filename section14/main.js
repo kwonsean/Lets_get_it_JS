@@ -3,11 +3,12 @@ const $score = document.querySelector('#score')
 const $game = document.querySelector('#game')
 const $start = document.querySelector('#start')
 const $$cells = document.querySelectorAll('.cell')
+const $life = document.querySelector('#life')
 
 const holes = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 let started = false
 let score = 0
-let time = 4
+let time = 60
 
 $start.addEventListener('click', () => {
   if (started) return
@@ -67,6 +68,23 @@ $$cells.forEach(($cell, index) => {
     }, 1000)
   })
   $cell.querySelector('.bomb').addEventListener('click', (event) => {
+    let leftLife = $life.innerText
+    leftLife -= 1
+    $life.innerText = leftLife
+    if (leftLife === 1) {
+      $life.style.color = 'red'
+    }
+    if (leftLife === 0) {
+      setTimeout(() => {
+        alert(`게임 오버! 점수는 ${score}점`)
+        const retry = confirm('재도전 하시겠습니까?')
+        if (retry) {
+          location.reload()
+        } else {
+          return
+        }
+      }, 50)
+    }
     event.target.classList.add('boom')
     event.target.classList.add('hidden')
     clearTimeout(holes[index])
