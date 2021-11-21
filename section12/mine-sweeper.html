@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>지뢰 찾기</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    td {
+      border: 1px solid #bbb;
+      text-align: center;
+      line-height: 20px;
+      width: 20px;
+      height: 20px;
+      background: #888;
+    }
+    td.opened { background: white; }
+    td.flag { background: red; }
+    td.question { background: orange; }
+    #timer{
+      display: none;
+    }
+    #timer.active {
+      display:block;
+    }
+  </style>
+  <script defer src="./main.js"></script>
+</head>
+<body>
+  <form id="form">
+    <input placeholder="가로 줄" id="row" size="5">
+    <input placeholder="세로 줄" id="cell" size="5">
+    <input placeholder="지뢰" id="mine" size="5">
+    <button>생성</button>
+  </form>
+  <div id="timer">소요시간</div>
+  <table id="table">
+    <tbody></tbody>
+  </table>
+  <div id="result"></div>
+</body>
+</html>
